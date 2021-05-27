@@ -42,22 +42,22 @@ Does this linear model predict mpg of MechaCar prototypes effectively? Why or wh
 ### Across all lots
 ![P](Module_15_images/m15_img1.png)
 
-* According to our calculations, the true mean of the sample is 1498.78. The PSI values are not different from the population mean. The p-Value is 0.06, which is larger than 0.05. Thus, there is NOT enough evidence to support rejecting the null hypothesis. 
+* According to our calculations, the true mean of the sample is 1499.531. The PSI values are not different from the population mean. The p-Value is 0.5117, which is larger than 0.05. Thus, there is NOT enough evidence to support rejecting the null hypothesis. 
 
 ### Lot 1
 ![P](Module_15_images/m15_img2.png)
 
-* The lot 1 sample has the true sample mean of 1500, as seen in the summary statistics. With a p-Value of 1, we cannot reject the null hypothesis. Therefore, there is no statistical difference between the observed sample mean and the presumed population mean.
+* The lot 1 sample has the true sample mean of 1500.018, as seen in the summary statistics. With a p-Value of 0.9048, we cannot reject the null hypothesis. Therefore, there is no statistical difference between the observed sample mean and the presumed population mean.
 
 ### Lot 2
 ![P](Module_15_images/m15_img3.png)
 
-* The lot 2 sample has the same outcome with a sample mean of 1500.02. With a p-Value of 0.61, we once again cannot reject the null hypothesis. Finally, the sample mean and the population mean of 1500 are statistically similar.
+* The lot 2 sample has the same outcome with a sample mean of 1499.571. With a p-Value of 0.3451, The p-Value is smaller than 0.05, which means we should reject the null hypothesis that the sample mean and the presumed population mean are not statistically different.
 
 ### Lot 3
 ![P](Module_15_images/m15_img4.png)
 
-* The lot 3 sample mean is 1496.14 and the p-Value is 0.04. The p-Value is smaller than 0.05, which means we should reject the null hypothesis that the sample mean and the presumed population mean are not statistically different.
+* The lot 3 sample mean is 1499.004 and the p-Value is 0.637. The p-Value is larger than 0.05, which means we we cannot reject the null hypothesis. Therefore, there is no statistical difference between the observed sample mean and the presumed population mean.
 
 ## Deliverable 4: Design a Study Comparing the MechaCar to the Competition
 
