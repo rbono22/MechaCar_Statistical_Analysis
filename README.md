@@ -61,4 +61,4 @@ Does this linear model predict mpg of MechaCar prototypes effectively? Why or wh
 
 ## Deliverable 4: Design a Study Comparing the MechaCar to the Competition
 
-
+* I think horsepower, the type of gas required, and mpg are 3 factors that consumers should consider when comapring competitors. Our null hypothesis for this experiment is that MechaCar is not different from the competition. Our alternative hypothesis alternatively is that MechaCar is different from our competition, whether it is better or worse. For this eperiment, we will need to use our t-test after collecting data from different types of competitor vehicles. Our t-test will be comparing the population of all types of competitor vehicles to test our hypothesis.
