@@ -1,64 +1,79 @@
-# MechaCar_Statistical_Analysis
-## Overview of Project
-A few weeks after starting his new role, Jeremy is approached by upper management about a special project. AutosRUs’ newest prototype, the MechaCar, is suffering from production troubles that are blocking the manufacturing team’s progress. AutosRUs’ upper management has called on Jeremy and the data analytics team to review the production data for insights that may help the manufacturing team.
+# Statistical Analysis of a Vehicle Prototype in R
 
-In this challenge, you’ll help Jeremy and the data analytics team do the following:
+## Project Overview
+The purpose of this project is to identify which variables can predict the MPG of a car prototype, "MechaCar", for the fictional company AutosRUs. Summary statistics are generated and t-tests are performed for individual manufacturing lots. Finally, a study is designed to compare MechaCar to the competition. R and [tidyverse](https://www.tidyverse.org/) are used to accomplish this analysis.  
 
-* Perform multiple linear regression analysis to identify which variables in the dataset predict the mpg of MechaCar prototypes
+## Linear Regression to Predict MPG
 
-* Collect summary statistics on the pounds per square inch (PSI) of the suspension coils from the manufacturing lots
+![mechacar_regress](https://github.com/Mishkanian/MechaCar_Statistical_Analysis/blob/main/README_images/mechacar_regress.png)
 
-* Run t-tests to determine if the manufacturing lots are statistically different from the mean population
+After performing a multiple linear regression on the [MechaCar_mpg.csv](https://github.com/Mishkanian/MechaCar_Statistical_Analysis/blob/main/datasets/MechaCar_mpg.csv) dataset, the following conclusions can be made:  
+- **Vehicle Length** and **Ground Clearance** are statistically significant. These variables provide a non-random amount of variance to the MPG values in the dataset.
+- The high significance level of the intercept implies that might be other factors that are significant to MPG. Since all available variables in this dataset were already passed in this regression, it can be inferred that additional research and data are necessary to uncover any unknown significant variables.
 
-* Design a statistical study to compare vehicle performance of the MechaCar vehicles against vehicles from other manufacturers. For each statistical analysis, you’ll write a summary interpretation of the findings.
+## Summary Statistics on Suspension Coils  
 
-## Deliverable 1: Linear Regression to Predict MPG
-### Regression: mpg = (6.267)vehicle_length + (0.0012)vehicle_weight + (0.0688)spoiler_angle + (3.546)ground_clearance + (-3.411)AWD + (-104.0)
+![total_summary](https://github.com/Mishkanian/MechaCar_Statistical_Analysis/blob/main/README_images/total_summary_psi.png)  
 
-Which variables/coefficients provided a non-random amount of variance to the mpg values in the dataset?
+The design specifications of AutosRUs' prototype "MechaCar" dictates that the variance of the suspension coils must not exceed 100 pounds per square inch. Although the total variance in the [summary dataframe](https://github.com/Mishkanian/MechaCar_Statistical_Analysis/blob/main/README_images/total_summary_psi.png) above shows a variance of 62, which is acceptable, investigating the variance of individual manufacture lots has shown that Manufacturing Lot 3 does not meet the current design specifications.
 
-* Vehicle weight, spoiler_angle & AWD provided a non-random amount of variance. However, there were two variables that had the most amount of random variance, ground_clearance and vehicle_length.
+Using the code below, the data in [Suspension_Coil.csv](https://github.com/Mishkanian/MechaCar_Statistical_Analysis/blob/main/datasets/Suspension_Coil.csv) is grouped by manufacturing lot:
 
-Is the slope of the linear model considered to be zero? Why or why not?
+```R
+# Creating a lot_summary dataframe grouped by manufacturing lots
+lot_summary <- Suspension_Coil_table %>% group_by(Manufacturing_Lot) %>% 
+summarize(Mean_PSI=mean(PSI), Median_PSI=median(PSI), Variance_PSI=var(PSI), 
+STDEV_PSI=sd(PSI), .groups = 'keep')
+```
 
-* The slope is NOT zero since the p-value is less than 0.05.
+After running this code, the following dataframe is generated:
 
-Does this linear model predict mpg of MechaCar prototypes effectively? Why or why not?
+![manufacturing_lots](https://github.com/Mishkanian/MechaCar_Statistical_Analysis/blob/main/README_images/manufacturing_lots_summary.png)
 
-* The R-squared value is 71%, which means that an estimated 71% of the time our model will predict mpg values correctly. This means our regression most likely suffers from omitted variable bias.
+Based on the above [lot_summary dataframe](https://github.com/Mishkanian/MechaCar_Statistical_Analysis/blob/main/README_images/manufacturing_lots_summary.png), it can be concluded that **only Manufacturing Lot 3 does not meet the design specifications** because the variance is far above 100.
 
-## Deliverable 2: Summary Statistics on Suspension Coils
-### Total Summary
-![P](Module_15_images/m15_img5.1.png)
+## T-Tests on Suspension Coils
 
-### Lot Summaries
-![P](Module_15_images/m15_img5.2.png)
+In this section of the analysis, t-tests are used to determine if all manufacturing lots and each lot individually are statistically different from the population mean of 1,500 pounds per square inch. **It is found that only Manufacturing Lot 3 is statistically different from the population mean.**
 
-* The MechaCar suspension coils determine that the variance of the suspension coils cannot exceed 100 lbs. per inch squared.
+### T-Test Across All Manufacturing Lots
 
-* Lot 1 and Lot 2 are both within design specifications. Furthermore, they both contain almost the same mean and median. Lot 3, on the other hand, displays the most variance, and it exceeds the manufacturers specs.
+![ttest_mecha](https://github.com/Mishkanian/MechaCar_Statistical_Analysis/blob/main/README_images/ttest_mecha.png)
 
-## Deliverable 3: T-Test on Suspension Coils
-### Across all lots
-![P](Module_15_images/m15_img1.png)
+In the t-test above, it is found that the mean across *all* manufacturing lots is not statistically different from the population mean of 1,500 pounds per square inch.
 
-* According to our calculations, the true mean of the sample is 1499.531. The PSI values are not different from the population mean. The p-Value is 0.5117, which is larger than 0.05. Thus, there is NOT enough evidence to support rejecting the null hypothesis. 
+### Manufacturing Lot 1 T-Test
 
-### Lot 1
-![P](Module_15_images/m15_img2.png)
+![ttest_lot1](https://github.com/Mishkanian/MechaCar_Statistical_Analysis/blob/main/README_images/ttest_lot1.png)
 
-* The lot 1 sample has the true sample mean of 1500.018, as seen in the summary statistics. With a p-Value of 0.9048, we cannot reject the null hypothesis. Therefore, there is no statistical difference between the observed sample mean and the presumed population mean.
+Manufacturing Lot 1 has a p-value of 1, which means that the **mean of Manufacturing Lot 1 is identical to the population mean** of 1,500. Therefore we fail to reject the null hypothesis, there is no statistical difference from the population mean.
 
-### Lot 2
-![P](Module_15_images/m15_img3.png)
+### Manufacturing Lot 2 T-Test
 
-* The lot 2 sample has the same outcome with a sample mean of 1499.571. With a p-Value of 0.3451, The p-Value is smaller than 0.05, which means we should reject the null hypothesis that the sample mean and the presumed population mean are not statistically different.
+![ttest_lot2](https://github.com/Mishkanian/MechaCar_Statistical_Analysis/blob/main/README_images/ttest_lot2.png)
 
-### Lot 3
-![P](Module_15_images/m15_img4.png)
+Manufacturing Lot 2 has a p-value of 0.61, therefore we fail to reject the null hypothesis. There is no statistical difference between Manufacturing Lot 2 and the population mean of 1,500.
 
-* The lot 3 sample mean is 1499.004 and the p-Value is 0.637. The p-Value is larger than 0.05, which means we we cannot reject the null hypothesis. Therefore, there is no statistical difference between the observed sample mean and the presumed population mean.
+### Manufacturing Lot 3 T-Test
 
-## Deliverable 4: Design a Study Comparing the MechaCar to the Competition
+![ttest_lot3](https://github.com/Mishkanian/MechaCar_Statistical_Analysis/blob/main/README_images/ttest_lot3.png)
 
-* I think horsepower, the type of gas required, and mpg are 3 factors that consumers should consider when comapring competitors. Our null hypothesis for this experiment is that MechaCar is not different from the competition. Our alternative hypothesis alternatively is that MechaCar is different from our competition, whether it is better or worse. For this eperiment, we will need to use our t-test after collecting data from different types of competitor vehicles. Our t-test will be comparing the population of all types of competitor vehicles to test our hypothesis.
+Manufacturing Lot 3 has a p-value of 0.04, therefore we reject the null hypothesis. This means **Manufacturing Lot 3 is statistically different from from the population mean** of 1,500 pounds per square inch.
+
+## Study Design: MechaCar vs Competition
+
+To quantify how "MechaCar" may perform against the competition, a statistical study of metrics that maximize consumer utility can be performed. In Economics, utility represents how much usefulness or enjoyment a consumer can obtain from consumption of a good or service. In this project, the metrics that might affect the utility of a vehicle are:
+- Purchase Price
+- Fuel Efficiency (Highway and City)
+- Maintenance Cost
+- Safety Ratings
+- Horsepower
+- Storage Capacity
+
+The null hypothesis and alternative hypothesis for this proposed study are as follows:  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;H<sub>o</sub>: MechaCar would have high consumer utility and would perform well against competitors.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;H<sub>a</sub>: MechaCar would *not* have high consumer utility and would *not* perform well against competitors. 
+
+After gathering the necessary data for the metrics listed above, Multiple Linear Regressions would be used to identify the statistically significant variables that affect sales of similar vehicles. The performace of MechaCar in these important categories will be compared to the mean performace of competitors through the analysis of variance (ANOVA) test.
+
+If it is found that MechaCar would have high consumer utility and would perform well when positioned against competing vehicles, it is recommended to manufacture MechaCar. Otherwise, if the null hypothesis is rejected, it is not recommend to manufacture MechaCar.
